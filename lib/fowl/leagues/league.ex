@@ -5,6 +5,7 @@ defmodule Fowl.Leagues.League do
   schema "leagues" do
     field :draft_time, :utc_datetime
     field :name, :string
+    has_many :teams, Fowl.Leagues.Team
 
     timestamps()
   end

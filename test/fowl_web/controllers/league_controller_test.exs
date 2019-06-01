@@ -13,14 +13,29 @@ defmodule FowlWeb.LeagueControllerTest do
     name: "some updated name"
   }
   @invalid_attrs %{draft_time: nil, name: nil}
+  @current_user_attrs %{
+    email: "valdez.a.jorge@gmail.com",
+    password: "some password"
+  }
 
   def fixture(:league) do
     {:ok, league} = Leagues.create_league(@create_attrs)
     league
   end
 
+  def fixture(:current_user) do
+    {:ok, curr_user} = Fowl.Accounts.create_user(@current_user_attrs)
+    curr_user
+  end
+
   setup %{conn: conn} do
-    {:ok, conn: put_req_header(conn, "accept", "application/json")}
+    {:ok, conn: conn, current_user: curr_user} = setup_current_user(conn)
+
+    {
+      :ok,
+      conn: put_req_header(conn, "accept", "application/json"),
+      current_user: curr_user
+    }
   end
 
   describe "index" do
@@ -88,5 +103,15 @@ defmodule FowlWeb.LeagueControllerTest do
   defp create_league(_) do
     league = fixture(:league)
     {:ok, league: league}
+  end
+
+  defp setup_current_user(conn) do
+    curr_user = fixture(:current_user)
+
+    {
+      :ok,
+      conn: Plug.Test.init_test_session(conn, current_user: curr_user.id),
+      current_user: curr_user
+    }
   end
 end
