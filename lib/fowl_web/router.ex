@@ -28,6 +28,18 @@ defmodule FowlWeb.Router do
     resources "/users", UserController, except: [:new, :edit]
   end
 
+  scope "/api/league", FowlWeb do
+    pipe_through [:api]
+    resources "/players", PlayersController, except: [:new, :edit]
+  end
+
+  scope "/api/league", FowlWeb do
+    pipe_through [:api, :api_authenticated]
+    resources "/leagues", LeagueController, except: [:new, :edit]
+    resources "/teams", TeamController, except: [:new, :edit]
+    resources "/team_players", TeamPlayerController, except: [:new, :edit]
+  end
+
   defp ensure_authenticated(conn, _opts) do
     case get_session(conn, :current_user) do
       nil ->

@@ -8,6 +8,7 @@ defmodule Fowl.Accounts.User do
     field :email, :string
     field :password, :string, virtual: true
     field :encrypted_password, :string
+    has_many :teams, Fowl.Leagues.Team
 
     timestamps()
   end
