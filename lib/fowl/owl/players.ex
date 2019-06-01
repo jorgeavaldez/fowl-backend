@@ -4,6 +4,7 @@ defmodule Fowl.OWL.Players do
 
   schema "players" do
     field :blizzard_id, :integer
+    has_many :team_players, Fowl.Leagues.TeamPlayer
 
     timestamps()
   end

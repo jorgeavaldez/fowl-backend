@@ -197,4 +197,100 @@ defmodule Fowl.Leagues do
   def change_team(%Team{} = team) do
     Team.changeset(team, %{})
   end
+
+  alias Fowl.Leagues.TeamPlayer
+
+  @doc """
+  Returns the list of team_players.
+
+  ## Examples
+
+      iex> list_team_players()
+      [%TeamPlayer{}, ...]
+
+  """
+  def list_team_players do
+    Repo.all(TeamPlayer)
+  end
+
+  @doc """
+  Gets a single team_player.
+
+  Raises `Ecto.NoResultsError` if the Team player does not exist.
+
+  ## Examples
+
+      iex> get_team_player!(123)
+      %TeamPlayer{}
+
+      iex> get_team_player!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_team_player!(id), do: Repo.get!(TeamPlayer, id)
+
+  @doc """
+  Creates a team_player.
+
+  ## Examples
+
+      iex> create_team_player(%{field: value})
+      {:ok, %TeamPlayer{}}
+
+      iex> create_team_player(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_team_player(attrs \\ %{}) do
+    %TeamPlayer{}
+    |> TeamPlayer.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a team_player.
+
+  ## Examples
+
+      iex> update_team_player(team_player, %{field: new_value})
+      {:ok, %TeamPlayer{}}
+
+      iex> update_team_player(team_player, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_team_player(%TeamPlayer{} = team_player, attrs) do
+    team_player
+    |> TeamPlayer.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a TeamPlayer.
+
+  ## Examples
+
+      iex> delete_team_player(team_player)
+      {:ok, %TeamPlayer{}}
+
+      iex> delete_team_player(team_player)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_team_player(%TeamPlayer{} = team_player) do
+    Repo.delete(team_player)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking team_player changes.
+
+  ## Examples
+
+      iex> change_team_player(team_player)
+      %Ecto.Changeset{source: %TeamPlayer{}}
+
+  """
+  def change_team_player(%TeamPlayer{} = team_player) do
+    TeamPlayer.changeset(team_player, %{})
+  end
 end

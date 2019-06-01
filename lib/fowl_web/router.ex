@@ -37,6 +37,7 @@ defmodule FowlWeb.Router do
     pipe_through [:api, :api_authenticated]
     resources "/leagues", LeagueController, except: [:new, :edit]
     resources "/teams", TeamController, except: [:new, :edit]
+    resources "/team_players", TeamPlayerController, except: [:new, :edit]
   end
 
   defp ensure_authenticated(conn, _opts) do

@@ -122,4 +122,63 @@ defmodule Fowl.LeaguesTest do
       assert %Ecto.Changeset{} = Leagues.change_team(team)
     end
   end
+
+  describe "team_players" do
+    alias Fowl.Leagues.TeamPlayer
+
+    @valid_attrs %{dropped: true}
+    @update_attrs %{dropped: false}
+    @invalid_attrs %{dropped: nil}
+
+    def team_player_fixture(attrs \\ %{}) do
+      {:ok, team_player} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Leagues.create_team_player()
+
+      team_player
+    end
+
+    test "list_team_players/0 returns all team_players" do
+      team_player = team_player_fixture()
+      assert Leagues.list_team_players() == [team_player]
+    end
+
+    test "get_team_player!/1 returns the team_player with given id" do
+      team_player = team_player_fixture()
+      assert Leagues.get_team_player!(team_player.id) == team_player
+    end
+
+    test "create_team_player/1 with valid data creates a team_player" do
+      assert {:ok, %TeamPlayer{} = team_player} = Leagues.create_team_player(@valid_attrs)
+      assert team_player.dropped == true
+    end
+
+    test "create_team_player/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Leagues.create_team_player(@invalid_attrs)
+    end
+
+    test "update_team_player/2 with valid data updates the team_player" do
+      team_player = team_player_fixture()
+      assert {:ok, %TeamPlayer{} = team_player} = Leagues.update_team_player(team_player, @update_attrs)
+      assert team_player.dropped == false
+    end
+
+    test "update_team_player/2 with invalid data returns error changeset" do
+      team_player = team_player_fixture()
+      assert {:error, %Ecto.Changeset{}} = Leagues.update_team_player(team_player, @invalid_attrs)
+      assert team_player == Leagues.get_team_player!(team_player.id)
+    end
+
+    test "delete_team_player/1 deletes the team_player" do
+      team_player = team_player_fixture()
+      assert {:ok, %TeamPlayer{}} = Leagues.delete_team_player(team_player)
+      assert_raise Ecto.NoResultsError, fn -> Leagues.get_team_player!(team_player.id) end
+    end
+
+    test "change_team_player/1 returns a team_player changeset" do
+      team_player = team_player_fixture()
+      assert %Ecto.Changeset{} = Leagues.change_team_player(team_player)
+    end
+  end
 end

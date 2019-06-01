@@ -6,6 +6,7 @@ defmodule Fowl.Leagues.Team do
     field :name, :string
     belongs_to :league, Fowl.Leagues.League
     belongs_to :user, Fowl.Accounts.User
+    has_many :team_players, Fowl.Leagues.TeamPlayer
 
     timestamps()
   end
@@ -15,5 +16,6 @@ defmodule Fowl.Leagues.Team do
     team
     |> cast(attrs, [:name])
     |> validate_required([:name])
+    |> validate_length(:team_players, max: 6)
   end
 end
