@@ -69,7 +69,7 @@ config :fowl, FowlWeb.Endpoint,
   secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE"),
   server: true
 
-config :fowl, FowlWeb.Repo,
+config :fowl, Fowl.Repo,
   adapter: Ecto.Adapters.Postgres,
   url: System.get_env("DATABASE_URL"),
   ssl: true,
