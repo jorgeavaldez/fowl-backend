@@ -2,7 +2,7 @@ defmodule FowlWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", FowlWeb.RoomChannel
+  channel "draft:*", FowlWeb.DraftChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
