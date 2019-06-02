@@ -11,7 +11,11 @@ defmodule FowlWeb.TeamPlayerView do
   end
 
   def render("team_player.json", %{team_player: team_player}) do
-    %{id: team_player.id,
-      dropped: team_player.dropped}
+    %{
+      id: team_player.id,
+      dropped: team_player.dropped,
+      team: render_one(team_player.team, FowlWeb.TeamView, "team.json"),
+      player: render_one(team_player.player, FowlWeb.PlayersView, "players.json"),
+    }
   end
 end

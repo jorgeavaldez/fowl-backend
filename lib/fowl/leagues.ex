@@ -223,6 +223,9 @@ defmodule Fowl.Leagues do
   """
   def list_team_players do
     Repo.all(TeamPlayer)
+    |> Repo.preload(team: :league)
+    |> Repo.preload(team: :user)
+    |> Repo.preload(:player)
   end
 
   @doc """
@@ -254,8 +257,14 @@ defmodule Fowl.Leagues do
 
   """
   def create_team_player(attrs \\ %{}) do
-    %TeamPlayer{}
-    |> TeamPlayer.changeset(attrs)
+    team = Repo.get(Fowl.Leagues.Team, attrs["team"])
+    player = Repo.get(Fowl.OWL.Players, attrs["player"])
+
+    %TeamPlayer{
+      team_id: team.id,
+      player_id: player.id,
+    }
+    |> TeamPlayer.changeset(%{ dropped: attrs["dropped"] || false })
     |> Repo.insert()
   end
 

@@ -14,6 +14,7 @@ defmodule Fowl.Leagues.TeamPlayer do
   def changeset(team_player, attrs) do
     team_player
     |> cast(attrs, [:dropped])
+    |> cast_assoc(:team, required: false)
     |> cast_assoc(:player, required: false)
     |> validate_required([:dropped])
   end
