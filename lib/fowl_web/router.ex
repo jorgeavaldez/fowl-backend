@@ -21,6 +21,7 @@ defmodule FowlWeb.Router do
   scope "/api", FowlWeb do
     pipe_through :api
     post "/users/login", UserController, :login
+    post "/users/register", UserController, :register
   end
 
   scope "/api", FowlWeb do

@@ -15,6 +15,8 @@ defmodule Fowl.Leagues.Team do
   def changeset(team, attrs) do
     team
     |> cast(attrs, [:name])
+    |> cast_assoc(:league, required: false)
+    |> cast_assoc(:user, required: false)
     |> validate_required([:name])
     |> validate_length(:team_players, max: 6)
   end

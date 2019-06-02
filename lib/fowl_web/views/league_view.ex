@@ -11,8 +11,10 @@ defmodule FowlWeb.LeagueView do
   end
 
   def render("league.json", %{league: league}) do
-    %{id: league.id,
+    %{
+      id: league.id,
       name: league.name,
-      draft_time: league.draft_time}
+      draft_time: league.draft_time
+    }
   end
 end

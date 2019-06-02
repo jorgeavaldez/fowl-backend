@@ -6,6 +6,24 @@ defmodule FowlWeb.UserController do
 
   action_fallback FowlWeb.FallbackController
 
+  def register(conn, params) do
+    case Fowl.Accounts.create_user(params) do
+      {:ok, user} ->
+        conn
+        |> put_session(:current_user, user.id)
+        |> put_status(:ok)
+        |> put_view(FowlWeb.UserView)
+        |> render("sign_in.json", user: user)
+
+      {:error, message} ->
+        conn
+        |> delete_session(:current_user)
+        |> put_status(:unauthorized)
+        |> put_view(FowlWeb.ErrorView)
+        |> render("401.json", message: message)
+    end
+  end
+
   def login(conn, %{"email" => email, "password" => password}) do
     case Fowl.Accounts.authenticate_user(email, password) do
       {:ok, user} ->

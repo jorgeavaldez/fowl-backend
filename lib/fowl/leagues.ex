@@ -115,6 +115,8 @@ defmodule Fowl.Leagues do
   """
   def list_teams do
     Repo.all(Team)
+    |> Repo.preload(:league)
+    |> Repo.preload(:user)
   end
 
   @doc """
@@ -131,7 +133,11 @@ defmodule Fowl.Leagues do
       ** (Ecto.NoResultsError)
 
   """
-  def get_team!(id), do: Repo.get!(Team, id)
+  def get_team!(id) do
+    Repo.get!(Team, id)
+    |> Repo.preload(:league)
+    |> Repo.preload(:user)
+  end
 
   @doc """
   Creates a team.
@@ -146,8 +152,14 @@ defmodule Fowl.Leagues do
 
   """
   def create_team(attrs \\ %{}) do
-    %Team{}
-    |> Team.changeset(attrs)
+    league = Repo.get(Fowl.Leagues.League, attrs["league"])
+    user = Repo.get(Fowl.Accounts.User, attrs["user"])
+
+    %Team{
+      league_id: league.id,
+      user_id: user.id,
+    }
+    |> Team.changeset(%{ name: attrs["name"] })
     |> Repo.insert()
   end
 
