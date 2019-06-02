@@ -43,8 +43,10 @@ defmodule FowlWeb.Endpoint do
     signing_salt: "i9AfaTk9"
 
   plug Corsica,
-    origins: ["http://localhost:4000", "http://localhost:3000"],
-    log: [rejected: :error, invalid: :warn, accepted: :debug]
+    origins: "*",
+    log: [rejected: :error, invalid: :warn, accepted: :debug],
+    allow_headers: :all,
+    allow_credentials: true
 
   plug FowlWeb.Router
 end

@@ -24,7 +24,10 @@ defmodule FowlWeb.UserController do
     end
   end
 
-  def login(conn, %{"email" => email, "password" => password}) do
+  # def login(conn, %{"email" => email, "password" => password}) do
+  def login(conn, params) do
+    %{ "email" => email, "password" => password } = params
+
     case Fowl.Accounts.authenticate_user(email, password) do
       {:ok, user} ->
         conn
